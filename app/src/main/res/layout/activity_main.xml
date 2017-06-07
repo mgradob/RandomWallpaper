@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mgb.randomwallpaper.views.MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Interval:"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <RadioGroup
+        android:id="@+id/intervalRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_conversion_absoluteHeight="160dp"
+        tools:layout_conversion_absoluteWidth="368dp"
+        tools:layout_conversion_absoluteX="8dp"
+        tools:layout_conversion_absoluteY="24dp">
+
+        <RadioButton
+            android:id="@+id/intervalDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Day" />
+
+        <RadioButton
+            android:id="@+id/intervalHalfDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Half day" />
+
+        <RadioButton
+            android:id="@+id/intervalHour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1 hr" />
+
+        <RadioButton
+            android:id="@+id/intervalHalfHour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30 mins" />
+
+        <RadioButton
+            android:id="@+id/intervalFifteenMins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="15 min" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Channels:"
+        app:layout_constraintBottom_toBottomOf="@+id/addChannelButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intervalRadioGroup"
+        tools:layout_conversion_absoluteHeight="16dp"
+        tools:layout_conversion_absoluteWidth="368dp"
+        tools:layout_conversion_absoluteX="8dp"
+        tools:layout_conversion_absoluteY="200dp" />
+
+    <Button
+        android:id="@+id/addChannelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Add channel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intervalRadioGroup"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="368dp"
+        tools:layout_conversion_absoluteX="8dp"
+        tools:layout_conversion_absoluteY="217dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/channelsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addChannelButton" />
+
+</android.support.constraint.ConstraintLayout>

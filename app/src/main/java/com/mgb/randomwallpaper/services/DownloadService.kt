@@ -1,13 +1,16 @@
 package com.mgb.randomwallpaper.services
 
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.app.WallpaperManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.IBinder
+import android.support.v4.app.NotificationCompat
+import com.mgb.randomwallpaper.R
 import com.mgb.randomwallpaper.database.CollectionsDAO
-import com.mgb.randomwallpaper.utils.DelegatesExt
-import com.mgb.randomwallpaper.utils.SharedPreferences
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,6 +33,8 @@ class DownloadService : Service(), AnkoLogger {
 
     companion object {
         val ID_DOWNLOAD_SERVICE = 1001
+        val ID_NOTIFICATION = 2001
+        val ACTION_NEW_WALLPAPER = "new_wallpaper"
     }
 
     private val collectionsDao: CollectionsDAO by lazy { CollectionsDAO(applicationContext) }
@@ -153,6 +158,9 @@ class DownloadService : Service(), AnkoLogger {
 
                 try {
                     wallpaperManager.setBitmap(bmp)
+
+                    showNotification()
+
                     info("Wallpaper set")
                 } catch (e: IOException) {
                     error("Set Wallpaper", e)
@@ -163,6 +171,26 @@ class DownloadService : Service(), AnkoLogger {
         } finally {
             this.stopSelf()
         }
+    }
+
+    private fun showNotification() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.cancel(ID_NOTIFICATION)
+
+        val newActionIntent = Intent(applicationContext, DownloadService::class.java)
+        newActionIntent.action = ACTION_NEW_WALLPAPER
+
+        val newAction = NotificationCompat.Action(0, applicationContext.resources.getText(R.string.notification_new),
+                PendingIntent.getService(applicationContext, DownloadService.ID_DOWNLOAD_SERVICE, newActionIntent, 0))
+
+        val notificationBuilder = NotificationCompat.Builder(applicationContext)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(applicationContext.resources.getText(R.string.notification_title))
+                .setContentText(applicationContext.resources.getText(R.string.notification_text))
+                .addAction(newAction)
+
+        notificationManager.notify(ID_NOTIFICATION, notificationBuilder.build())
     }
 
     interface WallpaperClient {

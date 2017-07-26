@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         })
 
         channelsRecyclerView.layoutManager = LinearLayoutManager(this)
-        channelsRecyclerView.adapter = (ChannelsAdapter(channels, mPresenter::selectChannel, this::showDeleteItem))
+        channelsRecyclerView.adapter = ChannelsAdapter(channels, mPresenter::selectChannel, this::showDeleteItem)
     }
 
     fun showDeleteItem(channel: ChannelModel) {

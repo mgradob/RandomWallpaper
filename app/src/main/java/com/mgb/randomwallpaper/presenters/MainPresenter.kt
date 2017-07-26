@@ -27,6 +27,7 @@ class MainPresenter(val mView: MainActivity, val context: Context = mView.applic
         info("Starting presenter")
 
         getChannelsFromDb()
+        scheduleAlarm()
     }
 
     fun stop() {

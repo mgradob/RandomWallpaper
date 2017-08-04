@@ -20,11 +20,11 @@ import org.jetbrains.anko.info
 class MainPresenter(val mView: MainActivity) : BasePresenter(mView), AnkoLogger {
 
     override fun start() {
-        info("Starting presenter")
+        info("Starting")
     }
 
     override fun stop() {
-        info("Stopping presenter")
+        info("Stopping")
     }
 
     override fun onDbReload() {

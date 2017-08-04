@@ -1,15 +1,16 @@
-package com.mgb.randomwallpaper.adapters.models
+package com.mgb.randomwallpaper.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.mgb.randomwallpaper.R
+import com.mgb.randomwallpaper.adapters.settings.HeaderItem
 import com.mgb.randomwallpaper.utils.inflate
 import kotlinx.android.synthetic.main.list_item_header.view.*
 
 /**
  * Created by mgradob on 8/4/17.
  */
-class SettingsHeaderDelegateAdapter : ViewTypeDelegateAdapter {
+class HeaderDelegateAdapter : ViewTypeDelegateAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = SettingsHeaderViewHolder(parent)
 

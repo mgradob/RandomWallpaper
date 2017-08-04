@@ -1,4 +1,4 @@
-package com.mgb.randomwallpaper.adapters.models
+package com.mgb.randomwallpaper.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

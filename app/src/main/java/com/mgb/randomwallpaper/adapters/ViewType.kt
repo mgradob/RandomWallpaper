@@ -1,4 +1,4 @@
-package com.mgb.randomwallpaper.adapters.models
+package com.mgb.randomwallpaper.adapters
 
 /**
  * Created by mgradob on 8/4/17.

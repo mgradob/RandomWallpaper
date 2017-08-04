@@ -21,11 +21,13 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
     var channels: List<ChannelModel> = emptyList()
 
     override fun start() {
-        info("Starting presenter")
+        info("Starting")
+
+        mView.updateUi()
     }
 
     override fun stop() {
-        info("Stopping presenter")
+        info("Stopping")
     }
 
     override fun onDbReload() {
@@ -36,6 +38,15 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
     private fun getChannelsFromDb() = collectionsDao.getChannels { channels ->
         this.channels = channels
         mView.updateUi()
+    }
+
+    fun showIntervalDialog() {
+        info("Select interval clicked")
+//        val dialog = AddChannelDialog()
+//        dialog.setOnConfirmListener(object : AddChannelDialog.AddChannelListener {
+//            override fun onConfirmClicked(channel: ChannelModel) = mPresenter.addChannel(channel)
+//        })
+//        dialog.show(supportFragmentManager, "add_channel")
     }
 
     fun addChannel(channelModel: ChannelModel) = collectionsDao.insertChannel(channelModel, this::onDbReload)

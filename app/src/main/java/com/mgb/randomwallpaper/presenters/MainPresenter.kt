@@ -17,57 +17,18 @@ import org.jetbrains.anko.info
 /**
  * Created by mgradob on 6/6/17.
  */
-class MainPresenter(val mView: MainActivity, val context: Context = mView.applicationContext) : AnkoLogger {
+class MainPresenter(val mView: MainActivity) : BasePresenter(mView), AnkoLogger {
 
-    private var interval: Long by Preference(context, SharedPreferences.UPDATE_INTERVAL.value, AlarmManager.INTERVAL_DAY)
-
-    private val collectionsDao: CollectionsDAO by lazy { CollectionsDAO(mView) }
-
-    fun start() {
+    override fun start() {
         info("Starting presenter")
-
-        getChannelsFromDb()
-        scheduleAlarm()
     }
 
-    fun stop() {
+    override fun stop() {
         info("Stopping presenter")
     }
 
-    fun updateInterval(period: Long) {
-        interval = period
-    }
-
-    private fun getChannelsFromDb() = collectionsDao.getChannels { channels -> mView.updateUi(channels, interval) }
-
-    fun addChannel(channel: ChannelModel) = collectionsDao.insertChannel(channel) {
-        getChannelsFromDb()
-        scheduleAlarm()
-    }
-
-    fun selectChannel(channel: ChannelModel, checked: Boolean) {
-        channel.selected = if (checked) 1 else 0
-
-        collectionsDao.updateChannel(channel) { getChannelsFromDb() }
-
-        scheduleAlarm()
-    }
-
-    fun removeChannel(channel: ChannelModel) = collectionsDao.deleteChannel(channel) {
-        getChannelsFromDb()
-        scheduleAlarm()
-    }
-
-    private fun scheduleAlarm() {
-        val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val pendingIntent = PendingIntent.getService(context, DownloadService.ID_DOWNLOAD_SERVICE, Intent(context, DownloadService::class.java), 0)
-
-        alarmManager.cancel(pendingIntent)
-
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), interval, pendingIntent)
-
-        info("Scheduled alarm")
+    override fun onDbReload() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
 

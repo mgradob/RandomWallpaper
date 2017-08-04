@@ -2,7 +2,9 @@ package com.mgb.randomwallpaper.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.mgb.randomwallpaper.database.ChannelModel
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import kotlin.reflect.KProperty
 
 /**
@@ -48,3 +50,5 @@ class Preference<T>(val context: Context, val name: String, val default: T) {
         }.apply()
     }
 }
+
+fun ViewGroup.inflate(layoutId: Int): View = LayoutInflater.from(context).inflate(layoutId, this, false)

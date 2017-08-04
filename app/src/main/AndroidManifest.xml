@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:allowBackup="true"
+        android:name=".RandomWallpaperApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -22,13 +23,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".views.SettingsActivity" />
+
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.DownloadService" android:enabled="true" android:exported="true"/>
+        <service
+            android:name=".services.DownloadService"
+            android:enabled="true"
+            android:exported="true" />
 
     </application>
 

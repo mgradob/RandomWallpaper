@@ -13,9 +13,7 @@ import kotlinx.android.synthetic.main.dialog_add_channel.*
 /**
  * Created by mgradob on 6/5/17.
  */
-class AddChannelDialog : DialogFragment() {
-
-    private var listener: AddChannelListener? = null
+class AddChannelDialog(val onOkClicked: (channel: ChannelModel) -> Unit) : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
@@ -23,25 +21,16 @@ class AddChannelDialog : DialogFragment() {
         dialog.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater?.inflate(R.layout.dialog_add_channel, container, false)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.dialog_add_channel, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
-        addChannelConfirm.setOnClickListener {
-            listener?.onConfirmClicked(ChannelModel(addChannelName.text.toString(), addChannelId.text.toString().toLong(), 1))
+        okButton.setOnClickListener {
+            onOkClicked(ChannelModel(channelName.text.toString(), channelId.text.toString().toLong(), 1))
             dismiss()
         }
-    }
-
-    fun setOnConfirmListener(listener: AddChannelListener) {
-        this.listener = listener
-    }
-
-    interface AddChannelListener {
-        fun onConfirmClicked(channel: ChannelModel)
     }
 }

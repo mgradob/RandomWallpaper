@@ -13,7 +13,7 @@ data class HeaderItem(val title: String) : ViewType {
     override fun getViewType(): Int = SettingsAdapterConstants.HEADER.value
 }
 
-data class SettingItem(val title: String, val value: String) : ViewType {
+data class SettingItem(val title: Int, val value: Int) : ViewType {
 
     override fun getViewType(): Int = SettingsAdapterConstants.SETTING.value
 }

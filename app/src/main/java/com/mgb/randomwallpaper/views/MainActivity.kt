@@ -1,10 +1,13 @@
 package com.mgb.randomwallpaper.views
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.mgb.randomwallpaper.R
+import com.mgb.randomwallpaper.adapters.main.MainAdapter
 import com.mgb.randomwallpaper.presenters.MainPresenter
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.startActivity
 
@@ -41,6 +44,14 @@ class MainActivity : BaseActivity(), AnkoLogger {
     }
 
     override fun updateUi() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val adapter = MainAdapter(mPresenter)
+
+        val layoutManager = GridLayoutManager(this, 2)
+        layoutManager.spanSizeLookup = MainAdapter.MainSpanSizeLookup(adapter)
+
+        collectionsRecyclerView.addItemDecoration(MainAdapter.MainItemDecorator(resources.getDimensionPixelSize(R.dimen.grid_spacing)))
+        collectionsRecyclerView.layoutManager = layoutManager
+        collectionsRecyclerView.setHasFixedSize(true)
+        collectionsRecyclerView.adapter = adapter
     }
 }

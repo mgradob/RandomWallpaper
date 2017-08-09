@@ -17,6 +17,8 @@ class SettingsActivity : BaseActivity(), AnkoLogger {
         setContentView(R.layout.activity_settings)
 
         mPresenter.start()
+
+        settingsFab.setOnClickListener { mPresenter.showAddChannelDialog() }
     }
 
     override fun onDestroy() {
@@ -26,41 +28,8 @@ class SettingsActivity : BaseActivity(), AnkoLogger {
     }
 
     override fun updateUi() {
-        mSettingsRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mSettingsRV.setHasFixedSize(true)
-        mSettingsRV.adapter = SettingsAdapter(mPresenter)
+        settingsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        settingsRecyclerView.setHasFixedSize(true)
+        settingsRecyclerView.adapter = SettingsAdapter(mPresenter)
     }
 }
-
-// LEFTOVER
-//    addChannelButton.setOnClickListener {
-//        val dialog = AddChannelDialog()
-//        dialog.setOnConfirmListener(object : AddChannelDialog.AddChannelListener {
-//            override fun onConfirmClicked(channel: ChannelModel) = mPresenter.addChannel(channel)
-//        })
-//        dialog.show(supportFragmentManager, "add_channel")
-//    }
-//
-//    fun updateUi(channels: List<ChannelModel>, interval: Long) {
-//        intervalRadioGroup.check(when (interval) {
-//            AlarmManager.INTERVAL_FIFTEEN_MINUTES -> R.id.intervalFifteenMins
-//            AlarmManager.INTERVAL_HALF_HOUR -> R.id.intervalHalfHour
-//            AlarmManager.INTERVAL_HOUR -> R.id.intervalHour
-//            AlarmManager.INTERVAL_HALF_DAY -> R.id.intervalHalfDay
-//            AlarmManager.INTERVAL_DAY -> R.id.intervalDay
-//            else -> R.id.intervalDay
-//        })
-//
-//        settingsRecyclerView.layoutManager = LinearLayoutManager(this)
-//        settingsRecyclerView.adapter = UpdateIntervalAdapter(this, mPresenter::onIntervalSelectionClicked)
-//
-//        channelsRecyclerView.layoutManager = LinearLayoutManager(this)
-//        channelsRecyclerView.adapter = ChannelsAdapter(channels, mPresenter::selectChannel, this::showDeleteItem)
-//    }
-//
-//    fun showDeleteItem(channel: ChannelModel) {
-//        alert("Do you want to delete ${channel.name}?", "Warning") {
-//            yesButton { mPresenter.removeChannel(channel) }
-//            noButton { }
-//        }.show()
-//    }

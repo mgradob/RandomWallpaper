@@ -2,6 +2,8 @@ package com.mgb.randomwallpaper.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,3 +54,9 @@ class Preference<T>(val context: Context, val name: String, val default: T) {
 }
 
 fun ViewGroup.inflate(layoutId: Int): View = LayoutInflater.from(context).inflate(layoutId, this, false)
+
+fun AppCompatActivity.getString(stringId: Int): String = resources.getString(stringId)
+
+fun AppCompatActivity.getString(stringId: Int, vararg args: Any): String = resources.getString(stringId, args)
+
+fun AppCompatActivity.getColor(colorId: Int): Int = resources.getColor(colorId)

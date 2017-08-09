@@ -1,14 +1,16 @@
 package com.mgb.randomwallpaper.presenters
 
 import android.app.AlarmManager
+import com.mgb.randomwallpaper.R
 import com.mgb.randomwallpaper.RandomWallpaperApp
 import com.mgb.randomwallpaper.database.ChannelModel
 import com.mgb.randomwallpaper.database.CollectionsDAO
+import com.mgb.randomwallpaper.dialogs.AddChannelDialog
+import com.mgb.randomwallpaper.dialogs.SelectIntervalDialog
 import com.mgb.randomwallpaper.utils.Preference
 import com.mgb.randomwallpaper.utils.SharedPreferences
 import com.mgb.randomwallpaper.views.SettingsActivity
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
+import org.jetbrains.anko.*
 
 /**
  * Created by mgradob on 7/31/17.
@@ -23,7 +25,7 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
     override fun start() {
         info("Starting")
 
-        mView.updateUi()
+        getChannelsFromDb()
     }
 
     override fun stop() {
@@ -32,7 +34,7 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
 
     override fun onDbReload() {
         getChannelsFromDb()
-        RandomWallpaperApp.instance.startDownloadService()
+        mView.startDownloadService()
     }
 
     private fun getChannelsFromDb() = collectionsDao.getChannels { channels ->
@@ -40,14 +42,16 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
         mView.updateUi()
     }
 
-    fun showIntervalDialog() {
-        info("Select interval clicked")
-//        val dialog = AddChannelDialog()
-//        dialog.setOnConfirmListener(object : AddChannelDialog.AddChannelListener {
-//            override fun onConfirmClicked(channel: ChannelModel) = mPresenter.addChannel(channel)
-//        })
-//        dialog.show(supportFragmentManager, "add_channel")
+    fun showIntervalDialog() = SelectIntervalDialog(interval, this::onIntervalChanged).show(mView.supportFragmentManager, "update_interval")
+
+    fun onIntervalChanged(interval: Long) {
+        info("Selected interval $interval")
+        this.interval = interval
+
+        onDbReload()
     }
+
+    fun showAddChannelDialog() = AddChannelDialog(this::addChannel).show(mView.supportFragmentManager, "add_channel")
 
     fun addChannel(channelModel: ChannelModel) = collectionsDao.insertChannel(channelModel, this::onDbReload)
 
@@ -55,6 +59,13 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
         channelModel.selected = if (checked) 1 else 0
 
         collectionsDao.updateChannel(channelModel, this::onDbReload)
+    }
+
+    fun showDeleteChannelDialog(channel: ChannelModel) {
+        mView.alert(mView.getString(R.string.delete_channel_warning_body, channel.name), mView.getString(R.string.delete_channel_warning_title)) {
+            yesButton { removeChannel(channel) }
+            noButton { }
+        }.show()
     }
 
     fun removeChannel(channelModel: ChannelModel) = collectionsDao.deleteChannel(channelModel, this::onDbReload)

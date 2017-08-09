@@ -2,9 +2,12 @@
 
 buildscript {
     ext.android_libs = '25.3.1'
+    ext.android_libs_constraint = '1.0.2'
     ext.kotlin_version = '1.1.2-3'
     ext.anko_version = '0.10.1'
     ext.retrofit_version = '2.3.0'
+    ext.okhttp = '3.8.0'
+    ext.picasso = '2.5.2'
 
     repositories {
         jcenter()

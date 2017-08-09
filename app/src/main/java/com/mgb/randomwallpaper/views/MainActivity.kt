@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.mgb.randomwallpaper.R
 import com.mgb.randomwallpaper.adapters.main.MainAdapter
 import com.mgb.randomwallpaper.presenters.MainPresenter
+import com.mgb.randomwallpaper.services.CollectionModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.startActivity
@@ -54,4 +55,6 @@ class MainActivity : BaseActivity(), AnkoLogger {
         collectionsRecyclerView.setHasFixedSize(true)
         collectionsRecyclerView.adapter = adapter
     }
+
+    fun goToCollectionDetail(collection: CollectionModel) = startActivity<CollectionDetailActivity>("id" to collection.id)
 }

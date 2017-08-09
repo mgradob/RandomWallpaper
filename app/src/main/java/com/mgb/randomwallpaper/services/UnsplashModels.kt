@@ -13,9 +13,9 @@ data class CollectionModel(
         var user: User
 )
 
-data class CoverPhoto(var urls: CoverPhotoUrls)
+data class CoverPhoto(var urls: Urls)
 
-data class CoverPhotoUrls(var raw: String, var full: String, var regular: String, var small: String, var thumb: String)
+data class Urls(var raw: String, var full: String, var regular: String, var small: String, var thumb: String)
 
 data class User(
         var id: String,
@@ -41,6 +41,8 @@ data class UserLinks(
         var photos: String,
         var portfolio: String
 )
+
+data class CollectionPhoto(var id: Int, var description: String?, var urls: Urls)
 //endregion
 
 //region Wallpapers

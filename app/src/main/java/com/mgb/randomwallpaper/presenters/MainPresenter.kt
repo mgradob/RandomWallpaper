@@ -81,8 +81,6 @@ class MainPresenter(val mView: MainActivity) : BasePresenter(mView), AnkoLogger 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun onCollectionClicked(collection: CollectionModel) {
-        info("Collection clicked, $collection")
-    }
+    fun onCollectionClicked(collection: CollectionModel) = mView.goToCollectionDetail(collection)
 }
 

@@ -71,4 +71,18 @@ class UnsplashService(var context: Context) : AnkoLogger {
         val call: Call<Array<CollectionModel>> = collectionsClient.getCollections()
         call.enqueue(callback)
     }
+
+    fun getCollectionInfo(collectionId: Int, callback: Callback<CollectionModel>) {
+        val collectionsClient: CollectionsClient = getRetrofit().create(CollectionsClient::class.java)
+
+        val call: Call<CollectionModel> = collectionsClient.getCollectionInfo(collectionId)
+        call.enqueue(callback)
+    }
+
+    fun getCollectionPhotos(collectionId: Int, callback: Callback<Array<CollectionPhoto>>) {
+        val collectionsClient: CollectionsClient = getRetrofit().create(CollectionsClient::class.java)
+
+        val call: Call<Array<CollectionPhoto>> = collectionsClient.getCollectionPhotos(collectionId)
+        call.enqueue(callback)
+    }
 }

@@ -32,5 +32,7 @@ class AddChannelDialog(val onOkClicked: (channel: ChannelModel) -> Unit) : Dialo
             onOkClicked(ChannelModel(channelName.text.toString(), channelId.text.toString().toLong(), 1))
             dismiss()
         }
+
+        cancelButton.setOnClickListener { dismiss() }
     }
 }

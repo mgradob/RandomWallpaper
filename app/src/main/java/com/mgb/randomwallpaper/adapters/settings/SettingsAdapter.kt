@@ -5,10 +5,7 @@ import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.mgb.randomwallpaper.R
-import com.mgb.randomwallpaper.adapters.DividerDelegateAdapter
-import com.mgb.randomwallpaper.adapters.HeaderDelegateAdapter
-import com.mgb.randomwallpaper.adapters.ViewType
-import com.mgb.randomwallpaper.adapters.ViewTypeDelegateAdapter
+import com.mgb.randomwallpaper.adapters.*
 import com.mgb.randomwallpaper.presenters.SettingsPresenter
 
 /**
@@ -20,7 +17,7 @@ class SettingsAdapter(val mPresenter: SettingsPresenter) : RecyclerView.Adapter<
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(SettingsAdapterConstants.HEADER.value, HeaderDelegateAdapter())
+        delegateAdapters.put(CommonConstants.HEADER.value, HeaderDelegateAdapter())
         delegateAdapters.put(SettingsAdapterConstants.SETTING.value, ItemDelegateAdapter(mPresenter::showIntervalDialog))
         delegateAdapters.put(SettingsAdapterConstants.CHANNEL.value, ChannelItemDelegateAdapter(mPresenter::selectChannel, mPresenter::showDeleteChannelDialog))
         delegateAdapters.put(SettingsAdapterConstants.DIVIDER.value, DividerDelegateAdapter())

@@ -41,6 +41,7 @@ class DownloadService : Service(), AnkoLogger {
         info("Start command, received intent:\n${intent.action}")
 
         cancelCompleteNotification()
+        cancelTryAgainNotification()
 
         showInProgressNotification()
 
@@ -60,6 +61,7 @@ class DownloadService : Service(), AnkoLogger {
 
                 override fun onFailure(call: Call<Array<WallpaperModel>>, t: Throwable) {
                     error("Get Random Wallpaper", t)
+                    showTryAgainNotification()
                 }
             })
         }
@@ -76,6 +78,7 @@ class DownloadService : Service(), AnkoLogger {
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     error("Download Wallpaper", t)
+                    showTryAgainNotification()
                 }
             })
         }
@@ -115,6 +118,7 @@ class DownloadService : Service(), AnkoLogger {
                     setWallpaper()
                 } catch (e: IOException) {
                     error("File download", e)
+                    showTryAgainNotification()
                 } finally {
                     inputStream?.close()
 
@@ -122,6 +126,7 @@ class DownloadService : Service(), AnkoLogger {
                 }
             } catch (e: IOException) {
                 error("File download", e)
+                showTryAgainNotification()
             }
         }
     }
@@ -146,10 +151,12 @@ class DownloadService : Service(), AnkoLogger {
                     info("Wallpaper set")
                 } catch (e: IOException) {
                     error("Set Wallpaper", e)
+                    showTryAgainNotification()
                 }
             }
         } catch (e: IOException) {
             error("Set Wallpaper", e)
+            showTryAgainNotification()
         } finally {
             this.stopSelf()
         }
@@ -190,6 +197,31 @@ class DownloadService : Service(), AnkoLogger {
     }
 
     private fun cancelCompleteNotification() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(ID_NOTIFICATION_COMPLETE)
+    }
+
+    private fun showTryAgainNotification() {
+        cancelInProgressNotification()
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val newActionIntent = Intent(applicationContext, DownloadService::class.java)
+        newActionIntent.action = ACTION_NEW_WALLPAPER
+
+        val newAction = NotificationCompat.Action(0, applicationContext.resources.getText(R.string.notification_try_again),
+                PendingIntent.getService(applicationContext, DownloadService.ID_DOWNLOAD_SERVICE, newActionIntent, 0))
+
+        val notificationBuilder = NotificationCompat.Builder(applicationContext)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(applicationContext.resources.getText(R.string.notification_try_again_title))
+                .setContentText(applicationContext.resources.getText(R.string.notification_try_again_text))
+                .addAction(newAction)
+
+        notificationManager.notify(ID_NOTIFICATION_COMPLETE, notificationBuilder.build())
+    }
+
+    private fun cancelTryAgainNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(ID_NOTIFICATION_COMPLETE)
     }

@@ -15,12 +15,15 @@ import org.jetbrains.anko.startActivity
 class MainActivity : BaseActivity(), AnkoLogger {
 
     val mPresenter: MainPresenter by lazy { MainPresenter(this) }
+    val mItemDecorator : MainAdapter.MainItemDecorator by lazy { MainAdapter.MainItemDecorator(resources.getDimensionPixelSize(R.dimen.grid_spacing)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mPresenter.start()
+
+        collectionsSwipeRefresh.setOnRefreshListener { mPresenter.reloadInfo() }
     }
 
     override fun onDestroy() {
@@ -45,12 +48,15 @@ class MainActivity : BaseActivity(), AnkoLogger {
     }
 
     override fun updateUi() {
+        collectionsSwipeRefresh.isRefreshing = false
+
         val adapter = MainAdapter(mPresenter)
 
         val layoutManager = GridLayoutManager(this, 2)
         layoutManager.spanSizeLookup = MainAdapter.MainSpanSizeLookup(adapter)
 
-        collectionsRecyclerView.addItemDecoration(MainAdapter.MainItemDecorator(resources.getDimensionPixelSize(R.dimen.grid_spacing)))
+        collectionsRecyclerView.removeItemDecoration(mItemDecorator)
+        collectionsRecyclerView.addItemDecoration(mItemDecorator)
         collectionsRecyclerView.layoutManager = layoutManager
         collectionsRecyclerView.setHasFixedSize(true)
         collectionsRecyclerView.adapter = adapter

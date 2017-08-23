@@ -35,5 +35,8 @@
     <string name="notification_in_progress_text">Please wait a bit</string>
     <string name="notification_complete_title">Wallpaper changed!</string>
     <string name="notification_complete_text">Don\'t like it? Click the NEW button!</string>
+    <string name="notification_try_again_title">Error!</string>
+    <string name="notification_try_again_text">We\'re unable to get your wallpaper</string>
     <string name="notification_new">NEW</string>
+    <string name="notification_try_again">TRY AGAIN</string>
 </resources>

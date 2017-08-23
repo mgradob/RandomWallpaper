@@ -24,6 +24,14 @@ class MainPresenter(val mView: MainActivity) : BasePresenter(mView), AnkoLogger 
     override fun start() {
         info("Starting")
 
+        reloadInfo()
+    }
+
+    override fun stop() {
+        info("Stopping")
+    }
+
+    override fun reloadInfo() {
         unsplashService.getFeaturedCollections(object : Callback<Array<CollectionModel>> {
             override fun onResponse(call: Call<Array<CollectionModel>>, response: Response<Array<CollectionModel>>) {
                 info("Response: ${response.body()}")
@@ -71,14 +79,6 @@ class MainPresenter(val mView: MainActivity) : BasePresenter(mView), AnkoLogger 
                 error("Get collections", t)
             }
         })
-    }
-
-    override fun stop() {
-        info("Stopping")
-    }
-
-    override fun onDbReload() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun onCollectionClicked(collection: CollectionModel) = mView.goToCollectionDetail(collection)

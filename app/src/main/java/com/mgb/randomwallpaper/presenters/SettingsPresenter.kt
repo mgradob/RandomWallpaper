@@ -2,7 +2,6 @@ package com.mgb.randomwallpaper.presenters
 
 import android.app.AlarmManager
 import com.mgb.randomwallpaper.R
-import com.mgb.randomwallpaper.RandomWallpaperApp
 import com.mgb.randomwallpaper.database.ChannelModel
 import com.mgb.randomwallpaper.database.CollectionsDAO
 import com.mgb.randomwallpaper.dialogs.AddChannelDialog
@@ -32,7 +31,7 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
         info("Stopping")
     }
 
-    override fun onDbReload() {
+    override fun reloadInfo() {
         getChannelsFromDb()
         mView.startDownloadService()
     }
@@ -48,17 +47,17 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
         info("Selected interval $interval")
         this.interval = interval
 
-        onDbReload()
+        reloadInfo()
     }
 
     fun showAddChannelDialog() = AddChannelDialog(this::addChannel).show(mView.supportFragmentManager, "add_channel")
 
-    fun addChannel(channelModel: ChannelModel) = collectionsDao.insertChannel(channelModel, this::onDbReload)
+    fun addChannel(channelModel: ChannelModel) = collectionsDao.insertChannel(channelModel, this::reloadInfo)
 
     fun selectChannel(channelModel: ChannelModel, checked: Boolean) {
         channelModel.selected = if (checked) 1 else 0
 
-        collectionsDao.updateChannel(channelModel, this::onDbReload)
+        collectionsDao.updateChannel(channelModel, this::reloadInfo)
     }
 
     fun showDeleteChannelDialog(channel: ChannelModel) {
@@ -68,5 +67,5 @@ class SettingsPresenter(val mView: SettingsActivity) : BasePresenter(mView), Ank
         }.show()
     }
 
-    fun removeChannel(channelModel: ChannelModel) = collectionsDao.deleteChannel(channelModel, this::onDbReload)
+    fun removeChannel(channelModel: ChannelModel) = collectionsDao.deleteChannel(channelModel, this::reloadInfo)
 }

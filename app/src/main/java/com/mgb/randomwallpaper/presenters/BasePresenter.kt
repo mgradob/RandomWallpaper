@@ -11,5 +11,5 @@ abstract class BasePresenter(val context: Context) {
 
     abstract fun stop()
 
-    abstract fun onDbReload()
+    abstract fun reloadInfo()
 }

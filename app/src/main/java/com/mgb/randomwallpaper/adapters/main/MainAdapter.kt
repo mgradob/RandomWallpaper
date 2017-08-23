@@ -7,10 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.mgb.randomwallpaper.R
-import com.mgb.randomwallpaper.adapters.HeaderDelegateAdapter
-import com.mgb.randomwallpaper.adapters.ViewType
-import com.mgb.randomwallpaper.adapters.ViewTypeDelegateAdapter
-import com.mgb.randomwallpaper.adapters.settings.HeaderItem
+import com.mgb.randomwallpaper.adapters.*
 import com.mgb.randomwallpaper.presenters.MainPresenter
 
 /**
@@ -22,7 +19,7 @@ class MainAdapter(val mPresenter: MainPresenter) : RecyclerView.Adapter<Recycler
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(MainAdapterConstants.HEADER.value, HeaderDelegateAdapter())
+        delegateAdapters.put(CommonConstants.HEADER.value, HeaderDelegateAdapter())
         delegateAdapters.put(MainAdapterConstants.COLLECTION.value, CollectionDelegateAdapter(mPresenter::onCollectionClicked))
 
         setupCollections()
@@ -53,7 +50,7 @@ class MainAdapter(val mPresenter: MainPresenter) : RecyclerView.Adapter<Recycler
     class MainSpanSizeLookup(val adapter: MainAdapter) : GridLayoutManager.SpanSizeLookup() {
         override fun getSpanSize(position: Int): Int {
             return when (adapter.getItemViewType(position)) {
-                MainAdapterConstants.HEADER.value -> 2
+                CommonConstants.HEADER.value -> 2
                 MainAdapterConstants.COLLECTION.value -> 1
                 else -> 1
             }
@@ -68,7 +65,7 @@ class MainAdapter(val mPresenter: MainPresenter) : RecyclerView.Adapter<Recycler
             val position = parent.getChildLayoutPosition(view)
 
             when ((parent.adapter as MainAdapter).getItemViewType(position)) {
-                MainAdapterConstants.HEADER.value -> if (position == 0) outRect.top = space
+                CommonConstants.HEADER.value -> if (position == 0) outRect.top = space
                 MainAdapterConstants.COLLECTION.value -> {
                     outRect.top = space
                     outRect.left = space

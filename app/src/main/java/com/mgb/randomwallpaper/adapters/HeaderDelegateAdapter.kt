@@ -3,7 +3,6 @@ package com.mgb.randomwallpaper.adapters
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.mgb.randomwallpaper.R
-import com.mgb.randomwallpaper.adapters.settings.HeaderItem
 import com.mgb.randomwallpaper.utils.inflate
 import kotlinx.android.synthetic.main.list_item_header.view.*
 

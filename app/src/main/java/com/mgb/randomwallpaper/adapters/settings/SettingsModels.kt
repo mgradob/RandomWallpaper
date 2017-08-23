@@ -6,13 +6,6 @@ import com.mgb.randomwallpaper.database.ChannelModel
 /**
  * Created by mgradob on 7/31/17.
  */
-data class Settings(val settings: List<ViewType>)
-
-data class HeaderItem(val title: String) : ViewType {
-
-    override fun getViewType(): Int = SettingsAdapterConstants.HEADER.value
-}
-
 data class SettingItem(val title: Int, val value: Int) : ViewType {
 
     override fun getViewType(): Int = SettingsAdapterConstants.SETTING.value

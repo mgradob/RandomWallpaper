@@ -8,6 +8,9 @@ buildscript {
     ext.retrofit_version = '2.3.0'
     ext.okhttp = '3.8.0'
     ext.picasso = '2.5.2'
+    ext.rxjava = '2.1.0'
+    ext.rxandroid = '2.0.1'
+    ext.rxbindings = '2.0.0'
 
     repositories {
         jcenter()

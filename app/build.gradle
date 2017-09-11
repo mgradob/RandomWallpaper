@@ -41,6 +41,15 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
 
+    compile "io.reactivex.rxjava2:rxjava:$rxjava"
+    compile "io.reactivex.rxjava2:rxkotlin:$rxjava"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroid"
+
+    compile "com.jakewharton.rxbinding2:rxbinding:$rxbindings"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxbindings"
+    compile "com.jakewharton.rxbinding2:rxbinding-design:$rxbindings"
+    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rxbindings"
+
     compile "com.squareup.picasso:picasso:$picasso"
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -49,6 +58,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
+
 repositories {
     mavenCentral()
 }
